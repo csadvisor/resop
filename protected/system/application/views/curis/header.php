@@ -3,7 +3,7 @@
 		<title><?php echo $title; ?></title>
 		<!-- insert metadata here -->
 		
-		
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 		<!-- CSS for everything -->
 		<style type="text/css">
 		#container {
@@ -152,15 +152,32 @@
 			
 	</head>
 	<body>
+		<div id="sidebar">
+			<h3 style="margin-bottom:10px">Navigation</h3>
+			<ul>
+				<?php 
+				foreach($links as $name => $link){
+					echo "<li><a href =\"".$link."\">".$name ."</a></li>";
+				}
+				?>
+			</ul>
+		</div>
 		<div id="topbar">
 			<div style="display:inline;">
-				<a href = "<?php 
-	    	if ($title == "Stanford Research Opportunities") 
-	     		echo 'http://cs.stanford.edu/resop';
-	    	else echo '/resop/protected/index.php/curis'?>">
+				<a href = "/resop/protected/index.php/curis">
 				<img src="https://cs.stanford.edu/resop/cslogo.png"></a>
 			</div>
 		</div>  
 		<div id="container">
 
-		<div id="main">
+			<div id="main">
+
+			</div> <!--end 'main' div -->
+			<div id="botbar">
+				<p><a href = "/resop/protected/index.php/"> 
+				Research Opportunities Home</a><br>
+				Questions? Contact the <a href="mailto:advisor@cs.stanford.edu">Course Advisor</a>
+			</div>
+		</div> <!--end 'container' div -->
+	</body>
+</html>

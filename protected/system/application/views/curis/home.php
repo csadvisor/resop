@@ -1,3 +1,3 @@
-			<div id="content">
-				<?=$html?>
-			</div>
+<div id="content">
+	<?=$html?>
+</div>
