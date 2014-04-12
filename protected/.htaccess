@@ -1,0 +1,12 @@
+AuthType WebAuth
+require privgroup stanford:faculty
+require privgroup stanford:student
+require privgroup stanford:stanford
+require user miles1
+require user peche
+require user llao
+require valid-user
+WebAuthLdapAttribute displayName
+WebAuthLdapAttribute mail
+WebAuthLdapAttribute suDisplayNameLF
+WebAuthLdapAttribute suAffliation

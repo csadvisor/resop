@@ -1,0 +1,60 @@
+			<div id="content">
+				<h2>Your Projects</h2>
+				<p> <?php if(!isset($projects)) echo 'You currently have no projects.'; else{ ?>
+				<?php
+				$capacity = $this->db->query("SELECT fac_capacity FROM users WHERE user_id='".$this->User->user_id."'")->row()->fac_capacity;
+				?>
+
+			<script language="Javascript">
+			function validate(msg){
+					return confirm(msg);
+			}
+			</script>
+
+				<form method="post" action=""><p align='center'>
+				Maximum Number of Students for All Projects:
+
+				<INPUT TYPE=text SIZE=3 MAXLENGTH=3 NAME=capacity VALUE='<?=$capacity?>' TABINDEX='7'>
+				<br>
+				<INPUT TYPE='Submit' NAME='Action' VALUE='Save Capacity' >
+				<INPUT TYPE='Reset' NAME='Action' VALUE='Reset'>
+				</p></form>
+
+				<?php foreach ($projects as $row): ?>
+				<table class="projectblurb">
+					<tr>
+					<td class=caption>Title:</td>
+						<td class=input><span class="b"><?=$row->title?></span></td>
+					</tr>
+					<tr>
+					<td class=caption>Research Field:</td>
+						<td class=input><?=$row->researchfield?><?=($row->secondfield=="")?"":", ".$row->secondfield?><?=($row->thirdfield=="")?"":", ".$row->thirdfield?></td>
+					</tr>
+                                        <tr>
+						<td class="caption">Project Views:</td>
+                                                <td><?=$row->views?></td>
+                                        </tr>
+                                        <tr>
+
+					<tr>
+						<td colspan="2" align="center"><a href="/resop/protected/index.php/curis/faculty/projects/<?=$row->proj_id?>">View/Edit</a></td>
+					</tr>
+
+					<tr>
+						<form method="post" action="" onSubmit="return validate('Are you sure you want to delete this project?')">
+						<input type="hidden" name="proj_id" value="<?=$row->proj_id?>" />
+						<td colspan="2" align="center"><INPUT TYPE='Submit' NAME='Action' VALUE='Delete project'></td>
+						</form>
+					</tr>
+					
+				
+				</table>
+				<?php endforeach;?>
+				
+				<form method="post" action="" onSubmit="return verify('Are you sure you want to delelte all your projects?')">
+				<p align = 'center'><INPUT TYPE='Submit' NAME='Action' VALUE='Delete All Projects'></p>
+				</form>
+				
+				
+				<? } //end 'no-project' else ?>
+			</div>

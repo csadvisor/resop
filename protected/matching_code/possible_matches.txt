@@ -1,0 +1,33 @@
+.1
+37 jtilley cnaut
+- - -
+.2
+37 jtilley zhoud
+37 jtilley cnaut
+- - -
+.3
+33 jtilley babchick
+37 jtilley zhoud
+37 jtilley cnaut
+- - -
+.4
+33 jtilley babchick
+37 jtilley zhoud
+37 jtilley blakec
+37 jtilley cnaut
+- - -
+.5
+38 blasley bholtz
+33 jtilley babchick
+37 jtilley zhoud
+37 jtilley blakec
+37 jtilley cnaut
+- - -
+.6
+38 blasley bholtz
+40 blasley jneid
+33 jtilley babchick
+37 jtilley zhoud
+37 jtilley blakec
+37 jtilley cnaut
+- - -

@@ -1,0 +1,61 @@
+			<div id="content">
+				<h2>Current Applications</h2>
+				<p> <?php 
+				if($app == "") echo 'No applications have been started';
+				else{ 
+				$app_stage = $this->db->query("SELECT app_stage FROM global_settings LIMIT 1")->row()->app_stage;
+				?>
+				
+				
+				<?php foreach ($app as $row): ?>
+				<table class="projectblurb">
+					<tr>
+						<td class=caption>Project Title</td>
+						<td class=input><span class="b"><a href="/resop/protected/index.php/curis/admin/projects/0/<?=$row->proj_id?>"><?=$row->proj_title?></a></span></td>
+					</tr>
+					<tr>
+						<td class=caption>Professor</td>
+						<td class=input><span><?=$row->proj_prof?></span></td>
+					</tr>
+					<tr>
+						<td class=caption>Student Applying</td>
+						<td class=input><span>
+						<a href="/resop/protected/index.php/curis/admin/users/<?=$row->user_id?>">
+						<?php
+						$query = $this->db->query("SELECT name FROM users WHERE user_id = '$row->user_id' ");
+						$temp = $query->result();
+						foreach ($temp as $temprow)
+							echo $temprow->name;
+						?></span></td></a>
+					</tr>
+<!--					<tr>
+						<td class=caption>Student Score</td>
+						<td class=input><?=$row->score?></td>
+					</tr>
+					<tr>
+						<td class=caption><?php 
+							if($app_stage == 1) echo "Primary Faculty Rating </td> <td class=input> $row->fac_rating1" ;
+							else if($app_stage == 2) echo "Secondary Faculty Rating </td> <td class=input> $row->fac_rating2";
+							else  echo "Tertiary Faculty Rating </td> <td class=input> $row->fac_rating3";
+							?>
+						</td>
+						
+		
+					</tr>-->
+					<tr>
+						<td class=caption>Statement</td>
+						<td class=input><?=$row->statement?></td>
+					</tr>
+					
+					<tr>
+					        <td class="caption">Application Status</td>
+						    <td class="input"><?php if ($row->accept_status==1) echo '<span class="accept">Accepted</span>';
+						if ($row->accept_status==2) echo '<span class="reject">Not Selected</span>';
+						if ($row->accept_status==0) echo 'Under Review'?></td>
+					</tr>
+				
+				</table>
+				<?php endforeach;?>
+				
+				<? } //end no project else ?>
+			</div>
