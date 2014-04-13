@@ -1,35 +1,43 @@
 			<div id="content">
 				<h2 align=center><?=$project->title?></h2>
 				<h3 align=center><?=$project->researchfield?><?=($project->secondfield=="")?"":", ".$project->secondfield?><?=($project->thirdfield=="")?"":", ".$project->thirdfield?></h3>
-				<table class="shaded">
+				<table class="table table-striped table-bor">
 			            <tr valign="top">
-						<td class=caption>Project Website</td>
+						<td class="h4">Project Website</td>
 						<td class=input><?=$project->url?></td>
 					</tr>
 					<tr valign="top">
-						<td class=caption>Contact Professor</td>
-						<td class="input"><a href="mailto:<?=$project->prof_email?>"><?=$project->prof?></td>
+						<td class="h4">Professor</td>
+						<td class="input"><?
+							if ($project->prof_webpage != '') {
+								echo "<a href=\"".$project->prof_webpage."\">";
+							}
+							?><?=$project->prof?></td>
+					</tr>
+					<tr valign="top">
+						<td class="h4">Contact</td>
+						<td class="input"><a href="mailto:<?=$project->prof_email?>"><?=$project->prof_email?></td>
 					</tr>
 					<tr  valign="top">
-						<td class=caption>Description</td>
+						<td class="h4">Description</td>
 						<td class=input><?=stripslashes($project->description)?></td>
 					</tr>
 					<!--<tr>
-						<td class=caption>Spring Quarter Preparation</td>
+						<td class="h4">Spring Quarter Preparation</td>
 						<td class=input><?=stripslashes($project->spring_prep)?></td>
 					</tr>-->
 					<tr  valign="top">
-						<td class=caption>Recommended Background</td>
+						<td class="h4">Recommended Background</td>
 						<td class=input><?=stripslashes($project->background)?></td>
 					</tr>
 					<tr  valign="top">
-						<td class="caption" width="30%">Eligible Degree Programs</td>
+						<td class="h4" width="30%">Eligible Degree Programs</td>
 						<td class="input"> <?= ($project->degree_program==0)? "Master's, Undergraduate":""?>
 						<?= ($project->degree_program==1)? "Master's":""?>
 						<?= ($project->degree_program==2)? "Undergraduate":""?></td>
 					</tr>
 					<tr  valign="top">
-						<td class="caption" width="25%">Available Work Incentives</td>
+						<td class="h4" width="25%">Available Work Incentives</td>
 						<td class="input">
 						<?=($project->incentives==0? "None":"")?>
 						<?=(($project->incentives & 1)>0 ? "-RA-ship<br/>":"")?>
@@ -65,11 +73,12 @@
 				<li>Why do you think you are qualified?</li>
 				</ul>
 				<div>
-				<textarea NAME='statement' style="width:100%;margin-bottom:5px;" MAXLENGTH=2000 rows='10' wrap='VIRTUAL'><?php echo $application->statement; ?></textarea>
+				<textarea class="form-control" NAME='statement' style="width:100%;margin-bottom:5px;" MAXLENGTH=2000 rows='10' wrap='VIRTUAL'><?php echo $application->statement; ?></textarea>
 				</div>
-				<div align="right">
-				  <input type='Submit' name='Action' value='Save'>
-				  <input type='Submit' name='Action' value='Delete' onClick="return confirm('Are you sure you want to delete your application for this project?')">
+				<br />
+				<div class="text-center">
+				  <input class="btn btn-success btn-lg" type='Submit' name='Action' value='Save'>
+				  <input class="btn btn-danger btn-lg" type='Submit' name='Action' value='Delete' onClick="return confirm('Are you sure you want to delete your application for this project?')">
 				  <!--<input type='reset' value='Reset Form'>-->
 				</div>
 				</form>

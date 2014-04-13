@@ -70,14 +70,8 @@ class Curis extends Controller {
 		$vdata['html'] = $query->row()->html;
 		$data['title'] = "Stanford CS Research Opportunities";
 		$links = ($this->login_link=="1")?array("Login"=>$this->urlroot):array();
-		$sidebarData['links'] = $links;
-		
-		$this->displayHeader($data);
-		$this->displaySidebar($sidebarData);
-		
-		$this->load->view('curis/landing', $vdata);
-		
-		$this->displayFooter($data);
+		$vdata['links'] = $links;
+		$this->display($vdata);
 	}
 	
 	/*
@@ -100,14 +94,9 @@ class Curis extends Controller {
                $links = $links = array("No user privileges for user type: '".
 				       $this->User->type."'" =>$this->urlroot);
       
-		$sidebarData['links'] = $links;
-		
-		$this->displayHeader($data);
-		$this->displaySidebar($sidebarData);
-		
-		$this->load->view('curis/home', $vdata);
-		
-		$this->displayFooter();
+		$vdata['links'] = $links;
+		$vdata['category'] = "Home";
+		$this->display($vdata);
 	}	
 	
 	
@@ -138,12 +127,12 @@ class Curis extends Controller {
 	/*
 	 	Functions for loading the frame
 	 */
-	function displayHeader($title)
+	function display($vdata)
 	{
-		$this->load->view('curis/header', $title);
+		$this->load->view('curis/main', $vdata);
 	}
 	
-	function displaySidebar($sidebarData)
+	/*function displaySidebar($sidebarData)
 	{
 		$this->load->view('curis/sidebar', $sidebarData);
 	}
@@ -151,7 +140,7 @@ class Curis extends Controller {
 	function displayFooter()
 	{
 		$this->load->view('curis/footer');	
-	}
+	}*/
 	
 /*********************
 	End Display Section
@@ -272,6 +261,7 @@ class Curis extends Controller {
 		$this->Project->description = addslashes($_POST['description']);
 		$this->Project->prof = $_POST['prof'];
 		$this->Project->prof_email = $_POST['prof_email'];
+		$this->Project->prof_webpage = $_POST['prof_webpage'];
 		//$this->Project->spring_prep = addslashes($_POST['spring_prep']);
 		$this->Project->background = addslashes($_POST['background']);
 		$this->Project->capacity = $_POST['capacity'];

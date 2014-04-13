@@ -37,8 +37,6 @@
 		  }
 		//if the user is in the db, will do nothing - otherwise, adds a record
 		  $this->User->type = $type;
-                  if($sunetid == 'aeckert') 
-                    $this->User->admin = '1';
 
 		$this->User->insert();
 

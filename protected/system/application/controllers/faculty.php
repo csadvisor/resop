@@ -7,7 +7,7 @@
 		//Not a faculty, deny priviledges
 		if($this->User->admin != "1" && $this->User->type != "faculty"){
 			$data['title'] = "ResOp :: Faculty :: Access Denied";
-			$view = 'curis/faculty/denied';
+			$vdata['view'] = 'curis/faculty/denied';
 			
 		/**Project Edit/View Section**/
 		}else if($page == "projects"){
@@ -36,20 +36,20 @@
 					$this->db->query("UPDATE users SET fac_capacity=$capacity WHERE user_id=$user_id");
 					$vdata['projects'] = $this->getprojects($this->User->user_id);
 					$data['title'] = "ResOp :: Faculty :: Your Projects";
-					$view = 'curis/faculty/projects';
+					$vdata['view'] = 'curis/faculty/projects';
 				//Project edited, save changes and return to all projects page
 				}else if($_POST['Action'] =="Save") {
 					$this->updateproject($proj_id);
 				}
 				$vdata['projects'] = $this->getprojects($this->User->user_id);
 				$data['title'] = "ResOp :: Faculty :: Your Projects";
-				$view = 'curis/faculty/projects';
+				$vdata['view'] = 'curis/faculty/projects';
 				
 			//No project selected, display all of the user's projects
 			}else if($proj_id == ""){
 				$vdata['projects'] = $this->getprojects($this->User->user_id);
 				$data['title'] = "ResOp :: Faculty :: Your Projects";
-				$view = 'curis/faculty/projects';
+				$vdata['view'] = 'curis/faculty/projects';
 				
 			//show the selected project
 			} else {
@@ -58,7 +58,7 @@
 				//Project selected, display specific project
 				if($this->User->user_id == $vdata['project']->prof_id ){
 					$data['title'] = "ResOp :: Faculty :: Your Projects :: ". $vdata['project']->title;
-					$view = 'curis/faculty/editproject';
+					$vdata['view'] = 'curis/faculty/editproject';
 					$vdata['enabled'] = $this->fac_edit_proj;
 				
 				//Display home page if they're trying to edit a project they don't own
@@ -66,7 +66,7 @@
 					$data['title'] = "ResOp :: Faculty";
 					$query = $this->db->query("SELECT html FROM dyn_pages WHERE view = 'faculty.home'");
 					$vdata['html'] = $query->row()->html;
-					$view = 'curis/faculty/home';
+					$vdata['view'] = 'curis/faculty/home';
 				}
 			}
 			
@@ -79,7 +79,7 @@
 					$this->updateproject();
 					$vdata['projects'] = $this->getprojects($this->User->user_id);
 					$data['title'] = "ResOp :: Faculty :: Your Projects";
-					$view = 'curis/faculty/projects';
+					$vdata['view'] = 'curis/faculty/projects';
 				}else if(isset($_POST['Action']) && $_POST['Action'] =="Save Capacity") {
 					$this->faculty("projects");
 					return;
@@ -89,12 +89,12 @@
 				//Display new project page
 				} else {
 					$data['title'] = "ResOp :: Faculty :: Add Project";
-					$view = 'curis/faculty/addproject';
+					$vdata['view'] = 'curis/faculty/addproject';
 				}
 			//project editing is disabled
 			} else{
 				$data['title'] = "ResOp :: Faculty :: Add Project Disabled";
-				$view = 'curis/disabled';
+				$vdata['view'] = 'curis/disabled';
 			}
 			
 		/**Applications Section**/
@@ -109,7 +109,7 @@
 				endforeach;
 			$vdata['projects'] = $projects;
 			$data['title'] = "ResOp :: Faculty :: View Applications";
-			$view = 'curis/faculty/applications';
+			$vdata['view'] = 'curis/faculty/applications';
 		
 		//Displays all the information relevant to a specific application
 		} else if ($page == "application"){
@@ -140,7 +140,7 @@
 				$vdata['prof_id'] = $this->User->user_id;
 				
 				$data['title'] = "ResOp :: Faculty :: Applications :: ". $vdata['application']->proj_title." :: ".$vdata['user']->name;
-				$view = 'curis/faculty/application';
+				$vdata['view'] = 'curis/faculty/application';
 				$vdata['rate_enabled'] = $this->fac_rate_stud;
 			}	
 			
@@ -154,7 +154,7 @@
 				endforeach;
 			$vdata['projects'] = $projects;
 			$data['title'] = "ResOp :: Faculty :: View Matches";
-			$view = 'curis/faculty/matches';	
+			$vdata['view'] = 'curis/faculty/matches';	
 			
 		/** Assistants Section **/
 		} else if ($page == "assistants") {
@@ -168,11 +168,11 @@
 				//display all assistants
 				$vdata['assistants'] = $this->db->query("SELECT * FROM assistants WHERE fac_id='".$this->User->user_id."'")->result();	
 				$data['title'] = "ResOp :: Faculty :: Assistants";
-				$view = 'curis/faculty/assistants';
+				$vdata['view'] = 'curis/faculty/assistants';
 			//feature disabled
 			} else {
 				$data['title'] = "ResOp :: Faculty :: Assistants [Disabled]";
-				$view = 'curis/disabled';
+				$vdata['view'] = 'curis/disabled';
 			}
 			
 		/**Home Section**/
@@ -180,7 +180,7 @@
 			$data['title'] = "ResOp :: Faculty";
 			$query = $this->db->query("SELECT html FROM dyn_pages WHERE view = 'faculty.home'");
 			$vdata['html'] = $query->row()->html;
-			$view = 'curis/faculty/home';
+			$vdata['view'] = 'curis/faculty/home';
 		}
 		$user_id = $this->User->user_id;
 		$query = $this->db->query("SELECT COUNT(app_id) as num_apps FROM project_applications WHERE prof_id = '$user_id' AND accept_status=0");
@@ -189,22 +189,18 @@
 		if($num_apps>0) $app_link = $app_link . '(' . $num_apps . ')';
 		//Array of all links to be displayed in the sidebar
 		$links = array(
-		 	'ResOp Home' => $this->urlroot,
-		 	'Faculty Home' => $this->urlroot . "/faculty",
+		 	'Home' => $this->urlroot . "/faculty",
 		 	'Projects' => $this->urlroot ."/faculty/projects",
 		 	$app_link => $this->urlroot ."/faculty/applications"		 	
           );
+		$vdata['category'] = 'Faculty';
+
         //Hide the following links if the appropriate permissions are not set
        // if($this->fac_see_matches ==1) $links['Matches'] = $this->urlroot ."/faculty/matches";
         if($this->fac_assn_asst ==1) $links['Assistants'] = $this->urlroot ."/faculty/assistants";
         if($this->fac_edit_proj ==1) $links['+ Add Project'] = $this->urlroot ."/faculty/addproject";
         
         $vdata['User'] = $this->User;
-        $sidebarData['links'] = $links;
-		$this->displayHeader($data);
-		$this->displaySidebar($sidebarData);
-		
-		$this->load->view($view, $vdata);
-		
-		$this->displayFooter($data);
+        $vdata['links'] = $links;
+		$this->display($vdata);
 ?>

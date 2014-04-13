@@ -6,7 +6,7 @@
 		//Users shouldn't get here without manually entering a URL.
 		if($this->User->admin != "1" && $this->User->type != "student"){
 			$data['title'] = "ResOp :: Students :: Access Denied";
-			$view = 'curis/student/denied';
+			$vdata['view'] = 'curis/student/denied';
 			
 		/**Profile Section**/
 		} else if($page == "profile"){
@@ -25,7 +25,7 @@
 			}
 			//default - just show the profile, no action, no message
 			$data['title'] = "ResOp :: Students :: Your Profile";
-			$view = 'curis/student/profile';
+			$vdata['view'] = 'curis/student/profile';
 			
 		/**Project/Application Section**/
 		} else if($page == "projects"){
@@ -43,7 +43,7 @@
 						if($_POST['faculty'] != "all" || $_POST['field'] != "all"){
 							$whereclause = "WHERE ";
 							if($_POST['faculty'] != "all" && $_POST['field'] != "all")
-								$whereclause .= "prof='".$_POST['faculty']."' AND researchfield='".$_POST['field']."' OR secondfield='".$_POST['field']."' OR thirdfield='".$_POST['field']."'";
+								$whereclause .= "prof='".$_POST['faculty']."' AND (researchfield='".$_POST['field']."' OR secondfield='".$_POST['field']."' OR thirdfield='".$_POST['field']."')";
 							else if ($_POST['faculty'] != "all")
 								$whereclause .= "prof='".$_POST['faculty']."'";
 							else
@@ -61,7 +61,7 @@
 						$vdata['projects'] = $this->getprojects();
 					}
 					$data['title'] = "ResOp :: Students :: Projects";
-					$view = 'curis/student/projects';
+					$vdata['view'] = 'curis/student/projects';
 					
 					
 					$vdata['fields'] = $this->fieldFilters();
@@ -92,11 +92,11 @@
 					//load the project
 					$vdata['project'] = $this->loadproject($proj_id);
 					$data['title'] = "ResOp :: Students :: Projects :: ". $vdata['project']->title;
-					$view = 'curis/student/projectdetails';
+					$vdata['view'] = 'curis/student/projectdetails';
 				}
 			} else {
 				$data['title'] = "ResOp :: Students :: Projects [Disabled]";
-				$view = 'curis/disabled';
+				$vdata['view'] = 'curis/disabled';
 			}
 		/**End Project Section*/
 		
@@ -111,7 +111,7 @@
 			$user_id =$this->User->user_id;
 			$query = $this->db->query("SELECT * FROM project_applications WHERE user_id='$user_id' ");
 			$vdata['app'] = $query->result();
-			$view = 'curis/student/scores';
+			$vdata['view'] = 'curis/student/scores';
 		
 		/**Acceptance Section**/
 		} else if($page == "accept"){
@@ -119,7 +119,7 @@
 				$query = $this->db->query("SELECT * FROM matches WHERE sunetid='".$this->User->sunetid."'");
 				if($query->num_rows() >0){
 					$data['title'] = "ResOp :: Students :: Accept Match";
-					$view = 'curis/student/accept';
+					$vdata['view'] = 'curis/student/accept';
 					$match = $query->row();
 					if(isset($_POST['Action']) && $_POST['Action'] == "Submit"){
 						$update['accepted'] = $_POST['accept'];
@@ -143,12 +143,12 @@
 					}
 				} else {
 					$data['title'] = "ResOp :: Students :: Accept Match";
-					$view = 'curis/student/accept';
+					$vdata['view'] = 'curis/student/accept';
 					$vdata['message'] = "Your match cannot be found.";
 				}
 			} else {
 				$data['title'] = "ResOp :: Students :: Accept [Disabled]";
-				$view = 'curis/disabled';
+				$vdata['view'] = 'curis/disabled';
 			}
 		/**End Acceptance Section **/
 		/**Home Section**/
@@ -156,17 +156,17 @@
 			$data['title'] = "ResOp :: Students";
 			$query = $this->db->query("SELECT html FROM dyn_pages WHERE view = 'student.home'");
 			$vdata['html'] = $query->row()->html;
-			$view = 'curis/student/home';
+			$vdata['view'] = 'curis/student/home';
 		}
 		
 		/** Link Preparation and View Loading   **/
 		
 		//Array of links to be displayed by sidebar
 		$links = array(
-				'ResOp Home' => $this->urlroot,
-               //'Student Home' => $this->urlroot . "/student",
-               'Student Profile' => $this->urlroot . "/student/profile"
+               'Home' => $this->urlroot . "/student",
+               'Profile' => $this->urlroot . "/student/profile"
           );
+		$vdata['category'] = 'Student';
         if($this->stud_see_proj == 1){
                $links['Projects'] = $this->urlroot . "/student/projects";
                $links['My Applications'] = $this->urlroot . "/student/scores";
@@ -177,15 +177,12 @@
          	//if($query->num_rows() >0)
 	       //  	$links['Accept Match'] = $this->urlroot . "/student/accept";
         }
-		$sidebarData['links'] = $links;
+		$vdata['links'] = $links;
 		
 		$vdata['User'] = $this->User;
 		
 		//Display all views required
-		$this->displayHeader($data);
-		$this->displaySidebar($sidebarData);
-		$this->load->view($view, $vdata);
-		$this->displayFooter($data);
+		$this->display($vdata);
 		
 		/** End function, return to calling file **/
 ?>

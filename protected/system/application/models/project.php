@@ -18,7 +18,7 @@ class Project extends Model{
 	public $degree_program ='';
 	public $incentives='';
 	public $views = '';
-
+	public $prof_webpage = '';
 	
 	function load_project($proj_id){
 		$query = $this->db->query("SELECT * FROM projects WHERE proj_id = '$proj_id'");
@@ -40,6 +40,7 @@ class Project extends Model{
 			$this->degree_program = $result->degree_program;
 			$this->incentives = $result->incentives;
 			$this->views= $result->views;
+			$this->prof_webpage = $result->prof_webpage;
 		}
 	}
 		

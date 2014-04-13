@@ -8,7 +8,7 @@
 		//Not an admin, deny priviledges
 		if($this->User->admin != "1"){
 			$data['title'] = "ResOp :: Admin :: Access Denied";
-			$view = 'curis/admin/denied';
+			$vdata['view'] = 'curis/admin/denied';
 		
 		/**Project Section**/
 		}else if($page == "projects"){
@@ -36,7 +36,7 @@
 					$vdata['projects'] = $this->getprojects();
 				}
 				$data['title'] = "ResOp :: Admin :: Projects";
-				$view = 'curis/admin/projects';
+				$vdata['view'] = 'curis/admin/projects';
 				
 				$vdata['fields'] = $this->fieldFilters();
 				$vdata['faculty'] = $this->db->query("SELECT DISTINCT prof FROM projects")->result();
@@ -49,7 +49,7 @@
 					$this->updateproject($proj_id, $this->loadproject($proj_id)->prof_id);
 					$vdata['projects'] = $this->getprojects();
 					$data['title'] = "ResOp :: Admin :: Projects";
-					$view = 'curis/admin/projects';
+					$vdata['view'] = 'curis/admin/projects';
 					
 					$vdata['fields'] = $this->fieldFilters();
 					$vdata['faculty'] = $this->db->query("SELECT DISTINCT prof FROM projects")->result();
@@ -59,7 +59,7 @@
 					$this->db->query("DELETE FROM projects WHERE proj_id='$proj_id'");
 					$vdata['projects'] = $this->getprojects();
 					$data['title'] = "CURIS :: Admin :: Projects";
-					$view = 'curis/admin/projects';
+					$vdata['view'] = 'curis/admin/projects';
 					
 					$vdata['fields'] = $this->fieldFilters();
 					$vdata['faculty'] = $this->db->query("SELECT DISTINCT prof FROM projects")->result();
@@ -68,7 +68,7 @@
 				} else {
 					$vdata['project'] = $this->loadproject($proj_id);
 					$data['title'] = "ResOp :: Admin :: Projects :: ". $vdata['project']->title;
-					$view = 'curis/admin/editproject';
+					$vdata['view'] = 'curis/admin/editproject';
 				}
 			}
 			
@@ -79,7 +79,7 @@
 			$query = $this->db->query("SELECT * FROM project_applications ORDER BY proj_id");
 			$vdata['app'] = $query->result();
 			
-			$view = 'curis/admin/applications';
+			$vdata['view'] = 'curis/admin/applications';
 			
 		/**Users Section**/
 		} else if($page =="users"){
@@ -88,7 +88,7 @@
 			if($user_id == "" || $user_id == "0"){
 				$vdata['result'] = $this->db->query("SELECT * FROM users ORDER BY type, sunetid")->result();
 				$data['title'] = "ResOp :: Admin :: Users";
-				$view = 'curis/admin/users';
+				$vdata['view'] = 'curis/admin/users';
 				
 			//user selected
 			}else{
@@ -98,20 +98,20 @@
 					$this->updateuser($user_id, $vdata['message']);
 					$vdata['result'] = $this->db->query("SELECT * FROM users ORDER BY type, sunetid")->result();
 					$data['title'] = "CURIS :: Admin :: Users";
-					$view = 'curis/admin/users';
+					$vdata['view'] = 'curis/admin/users';
 				
 				//User Selected.  Display single user editing mode
 				} else {
 					$vdata['query'] = $this->db->query("SELECT * FROM users WHERE user_id='$user_id'");
 					$data['title'] = "ResOp :: Admin :: Users";
-					$view = 'curis/admin/useredit';
+					$vdata['view'] = 'curis/admin/useredit';
 				}
 			}
 		
 		/**Pages Section**/
 		} else if ($page == "pages"){
 			$data['title'] = "ResOp :: Admin :: Pages";
-			$view = 'curis/admin/pages';
+			$vdata['view'] = 'curis/admin/pages';
 			
 		/**Edit Page Section**/	
 		}else if ($page == "editpage"){
@@ -119,17 +119,17 @@
 			//Page has been changed.  Save changes
 			if (isset($_POST['Action']) && $_POST['Action'] == "Save"){
 				$vdata['success'] = $this->updatepage($user_id);
-				$vdata['html'] = $this->db->query("SELECT html FROM dyn_pages WHERE view='$user_id'")->row()->html;
-				$vdata['view'] = $user_id;
+				$vdata['edithtml'] = $this->db->query("SELECT html FROM dyn_pages WHERE view='$user_id'")->row()->html;
+				$vdata['page'] = $user_id;
 				$data['title'] = "ResOp :: Admin :: Edit Page :: $user_id";
-				$view = 'curis/admin/editpage';$vdata['view'] = $user_id;
+				$vdata['view'] = 'curis/admin/editpage';
 			
 			//Page Selected.  Go to edit page view
 			} else {
-				$vdata['html'] = $this->db->query("SELECT html FROM dyn_pages WHERE view='$user_id'")->row()->html;
-				$vdata['view'] = $user_id;
+				$vdata['edithtml'] = $this->db->query("SELECT html FROM dyn_pages WHERE view='$user_id'")->row()->html;
+				$vdata['page'] = $user_id;
 				$data['title'] = "ResOp :: Admin :: Edit Page :: $user_id";
-				$view = 'curis/admin/editpage';
+				$vdata['view'] = 'curis/admin/editpage';
 				$vdata['success'] = "";
 			}	
 		
@@ -148,7 +148,7 @@
 					exec("./matching_code/email matching_code/mail $subject $from $to", $output);
 					$vdata['text'] = $output;
 					$vdata['success'] = 'Successfully Sent';
-					$view = 'curis/admin/exec_display';
+					$vdata['view'] = 'curis/admin/exec_display';
 					$data['title'] = "ResOp :: Admin :: Email Result";
 				//save
 				}else if($_POST['Action'] == "Save Message Body"){
@@ -158,14 +158,14 @@
 					$vdata['text'] = $output;
 					$vdata['success'] = 'Successfully Saved';
 					$data['title'] = "ResOp :: Admin :: Send Email";
-					$view = 'curis/admin/email';
+					$vdata['view'] = 'curis/admin/email';
 				}
 			//Go to edit message view
 			} else {
 				exec("cat matching_code/mail", $output);
 				$vdata['text'] = $output;
 				$data['title'] = "ResOp :: Admin :: Send Students Email";
-				$view = 'curis/admin/email';
+				$vdata['view'] = 'curis/admin/email';
 				$vdata['success'] = "";
 			}	
 			
@@ -179,16 +179,15 @@
 				exec("cat matching_code/mesg", $output);
 				$vdata['text'] = $output;
 				$vdata['success'] = 'Successfully Updated';
-				$view = 'curis/admin/editmessage';
+				$vdata['view'] = 'curis/admin/editmessage';
 				$data['title'] = "ResOp :: Admin :: Edit Email Message";
-				$view = 'curis/admin/editmessage';
-			
+
 			//Go to edit message view
 			} else {
 				exec("cat matching_code/mesg", $output);
 				$vdata['text'] = $output;
 				$data['title'] = "ResOp :: Admin :: Edit Email Message";
-				$view = 'curis/admin/editmessage';
+				$vdata['view'] = 'curis/admin/editmessage';
 				$vdata['success'] = "";
 			}	
 			
@@ -205,7 +204,7 @@
 					exec("./matching_code/match_graph -f matching_code/graph.txt -p -g -a $min -b $max", $output);
 					$data['title'] = "ResOp :: Admin :: Your Matches";
 					$vdata['text'] = $output;
-					$view = 'curis/admin/matching_display';
+					$vdata['view'] = 'curis/admin/matching_display';
 				//select a givin matching
 				}else if(strstr($_POST['Action'],'Select matching') != FALSE){
 					$selectedMatchNum = str_replace ('Select matching ','', $_POST['Action']);
@@ -213,7 +212,7 @@
 					$data['title'] = "ResOp :: Admin :: Selected Match";
 					exec("cat ./matching_code/selected_matching.txt", $output);
 					$vdata['text'] = $output;
-					$view = 'curis/admin/selected_matching';
+					$vdata['view'] = 'curis/admin/selected_matching';
 				//Finalize matching
 				}else if($_POST['Action'] == "Finalize this selection and send emails"){
 					$this->admin('selectedmatching');
@@ -222,7 +221,7 @@
 			//no buttons pressed, show default view
 			}else{
 				$data['title'] = "ResOp :: Admin :: Matching";
-				$view = 'curis/admin/matching_range';
+				$vdata['view'] = 'curis/admin/matching_range';
 			}
 			
 		/**Selected Match**/
@@ -232,14 +231,14 @@
 				$data['title'] = "ResOp :: Admin :: Selected Match";
 				$from = $_POST['from'];
 				exec("./matching_code/finalize_matching matching_code/selected_matching.txt matching_code/mesg $from", $output);
-				$view = 'curis/admin/exec_display';
+				$vdata['view'] = 'curis/admin/exec_display';
 				$vdata['text'] = $output;
 			//display selected match
 			}else{	
 				$data['title'] = "ResOp :: Admin :: Selected Match";
 				exec("cat ./matching_code/selected_matching.txt", $output);
 				$vdata['text'] = $output;
-				$view = 'curis/admin/selected_matching';
+				$vdata['view'] = 'curis/admin/selected_matching';
 			}
 			
 		/** Export Acceptances **/
@@ -271,7 +270,7 @@
 				}
 			}
 			$data['title'] = "ResOp :: Admin :: Export Matches";
-			$view = 'curis/admin/export';
+			$vdata['view'] = 'curis/admin/export';
 			
 			
 		/**Housekeeping**/
@@ -313,7 +312,7 @@
 				}
 			}
 			$data['title'] = "ResOp :: Admin :: Housekeeping";
-			$view = 'curis/admin/housekeeping';
+			$vdata['view'] = 'curis/admin/housekeeping';
 		
 		/**Home Page Section**/	
 		} else {
@@ -339,13 +338,12 @@
 			$vdata['updated'] = "Updated.";
 			$vdata['settings'] = $this->db->query("SELECT * FROM global_settings LIMIT 1")->row();
 			$data['title'] = "ResOp :: Admin";
-			$view = 'curis/admin/home';
+			$vdata['view'] = 'curis/admin/home';
 		}
 		
 		//All the links to display on the sidebar
 		$links = array(
-               'ResOp Home' => $this->urlroot,
-               'Admin Home' => $this ->urlroot . "/admin",
+               'Home' => $this ->urlroot . "/admin",
                'Projects' => $this->urlroot . "/admin/projects",
                'Applications' => $this->urlroot . "/admin/applications",
                'Users' => $this->urlroot ."/admin/users",
@@ -357,11 +355,9 @@
               // 'Export Matches' => $this->urlroot . "/admin/export",
                'Housekeeping' => $this->urlroot."/admin/housekeeping"
           );
-		$sidebarData['links'] = $links;
+		$vdata['category'] = "Admin";
+		$vdata['links'] = $links;
 		
 		//Display all views necessary
-		$this->displayHeader($data);
-		$this->displaySidebar($sidebarData);
-		$this->load->view($view, $vdata);
-		$this->displayFooter($data);
+		$this->display($vdata);
 ?>

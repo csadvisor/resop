@@ -1,85 +1,149 @@
-			<div id="content">
-				<h2>Add a Project</h2>
-				<form method="post" action="">
-				<table>
-					<tr>
-						<td class="caption">Project Title</td>
-						<td class="input"><input type="text" name="title" size="40" maxlength="100" tabindex=1/></td>
-					</tr>
-					<tr>
-						<td class="caption">Field of Research</td>
-						<td class="input">
-						<SELECT NAME='researchfield'>
-							<OPTION VALUE='other'>Other (enter below)</OPTION><OPTION VALUE='AI'>AI</OPTION><OPTION VALUE='Algorithms'>Algorithms</OPTION><OPTION VALUE='Architecture & Hardware'>Architecture & Hardware</OPTION><OPTION VALUE='BioComputation'>BioComputation</OPTION><OPTION VALUE='Compilers'>Compilers</OPTION><OPTION VALUE='Databases'>Databases</OPTION><OPTION VALUE='Distributed Systems'>Distributed Systems</OPTION><OPTION VALUE='Graphics'>Graphics</OPTION><OPTION VALUE='HCI'>HCI</OPTION><OPTION VALUE='Networking'>Networking</OPTION><OPTION VALUE='Operating Systems'>Operating Systems</OPTION><OPTION VALUE='Programming Languages'>Programming Languages</OPTION><OPTION VALUE='Robotics'>Robotics</OPTION><OPTION VALUE='Scientific Computing'>Scientific Computing</OPTION><OPTION VALUE='Security'>Security</OPTION><OPTION VALUE='Software Engineering'>Software Engineering</OPTION><OPTION VALUE='Theory of Computation'>Theory of Computation</OPTION><OPTION VALUE='Vision'>Vision</OPTION></SELECT><BR>
-
-							<INPUT TYPE=text SIZE=50 MAXLENGTH=150 NAME=researchfield_typed VALUE='' TABINDEX='2'>
-						</td>
-					</tr>
-					<tr>
-						<td class="caption">Secondary Field of Research(optional)</td>
-						<td class="input">
-						<SELECT NAME='secondfield'>
-							<option value=''> </option>
-							<OPTION VALUE='other'>Other (enter below)</OPTION><OPTION VALUE='AI'>AI</OPTION><OPTION VALUE='Algorithms'>Algorithms</OPTION><OPTION VALUE='Architecture & Hardware'>Architecture & Hardware</OPTION><OPTION VALUE='BioComputation'>BioComputation</OPTION><OPTION VALUE='Compilers'>Compilers</OPTION><OPTION VALUE='Databases'>Databases</OPTION><OPTION VALUE='Distributed Systems'>Distributed Systems</OPTION><OPTION VALUE='Graphics'>Graphics</OPTION><OPTION VALUE='HCI'>HCI</OPTION><OPTION VALUE='Networking'>Networking</OPTION><OPTION VALUE='Operating Systems'>Operating Systems</OPTION><OPTION VALUE='Programming Languages'>Programming Languages</OPTION><OPTION VALUE='Robotics'>Robotics</OPTION><OPTION VALUE='Scientific Computing'>Scientific Computing</OPTION><OPTION VALUE='Security'>Security</OPTION><OPTION VALUE='Software Engineering'>Software Engineering</OPTION><OPTION VALUE='Theory of Computation'>Theory of Computation</OPTION><OPTION VALUE='Vision'>Vision</OPTION></SELECT><BR>
-
-							<INPUT TYPE=text SIZE=50 MAXLENGTH=150 NAME=secondfield_typed VALUE='' TABINDEX='2'>
-						</td>
-					</tr>
-					<tr>
-						<td class="caption">Third Field of Research(optional)</td>
-						<td class="input">
-						<SELECT NAME='thirdfield'>
-							<option value=''> </option>
-							<OPTION VALUE='other'>Other (enter below)</OPTION><OPTION VALUE='AI'>AI</OPTION><OPTION VALUE='Algorithms'>Algorithms</OPTION><OPTION VALUE='Architecture & Hardware'>Architecture & Hardware</OPTION><OPTION VALUE='BioComputation'>BioComputation</OPTION><OPTION VALUE='Compilers'>Compilers</OPTION><OPTION VALUE='Databases'>Databases</OPTION><OPTION VALUE='Distributed Systems'>Distributed Systems</OPTION><OPTION VALUE='Graphics'>Graphics</OPTION><OPTION VALUE='HCI'>HCI</OPTION><OPTION VALUE='Networking'>Networking</OPTION><OPTION VALUE='Operating Systems'>Operating Systems</OPTION><OPTION VALUE='Programming Languages'>Programming Languages</OPTION><OPTION VALUE='Robotics'>Robotics</OPTION><OPTION VALUE='Scientific Computing'>Scientific Computing</OPTION><OPTION VALUE='Security'>Security</OPTION><OPTION VALUE='Software Engineering'>Software Engineering</OPTION><OPTION VALUE='Theory of Computation'>Theory of Computation</OPTION><OPTION VALUE='Vision'>Vision</OPTION></SELECT><BR>
-
-							<INPUT TYPE=text SIZE=50 MAXLENGTH=150 NAME=thirdfield_typed VALUE='' TABINDEX='2'>
-						</td>
-					</tr>
-					<tr>
-						<td class="caption">Project URL</td>
-						<td class="input"><INPUT TYPE=text SIZE=50 MAXLENGTH=150 NAME=url VALUE='' TABINDEX='3'></td>
-					</tr>
-					<tr>
-						<td class="caption">Project Description</td>
-						<td class="input"><TEXTAREA NAME='description' MAXLENGTH=20000 cols='50' rows='6' wrap='VIRTUAL' tabindex='3'></TEXTAREA>
-						</td>
-					</tr>
-					<tr>
-						<td class="caption">Recommended Background</td>
-						<td class="input"><TEXTAREA NAME='background' MAXLENGTH=20000 cols='50' rows='3' wrap='VIRTUAL' tabindex='4'></TEXTAREA>
-						</td>
-					</tr>
-					<tr>
-						<td class="caption">Eligible Degree Programs</td>
-						<td class="input"><input type="radio" name="degree_program" value='2'> Undergraduate |<input type="radio" name="degree_program" value='1'> Master's |
-						<input type="radio" name="degree_program" value='0' Checked> Both</td>
-					</tr>
-					<tr>
-						<td class="caption">Available Work Incentives</td>
-						<td class="input"><input type="checkbox" name="RAship" value='1'>RA-ship (Master's only) <br/>
-						<input type="checkbox" name="hourly" value='2'>Hourly pay </br>
-						<input type="checkbox" name="credit" value='4'>Credit</td>
-					</tr>
-					<tr>
-						<td class="caption">Number of Students (for this project)</td>
-						<td class="input"><INPUT TYPE=text SIZE=3 MAXLENGTH=9 NAME=capacity VALUE='' TABINDEX='5'>
-						</td>
-					</tr>
-					<tr>
-						<td class="caption">Contact Professor</td>
-						<td class="input"><INPUT TYPE=text SIZE=40 MAXLENGTH=120 NAME=prof VALUE='<?=$User->name?>' TABINDEX='6'></td>
-					</tr>
-					<tr>
-						<td class="caption">Contact Email</td>
-						<td class="input"><INPUT TYPE=text SIZE=40 MAXLENGTH=120 NAME=prof_email VALUE='<?=$User->email?>' TABINDEX='7'>
-						</td>
-					</tr>
-					<tr>
-						<td colspan=2 align=center>
-						<INPUT TYPE='Submit' NAME='Action' VALUE='Save'><INPUT TYPE='Reset' NAME='Action' VALUE='Reset'>
-						</td>
-					</tr>
-				</table>
-				</form>
-
+<div id="content">
+	<h1 class="page-header text-center">Add Project</h1>
+	<form method="post" action="" role="form" class="form-horizontal">
+		<div class="form-group">
+			<label for="title" class="col-sm-4 control-label">Project Title</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="title" id="title" maxlength="100" />
 			</div>
+		</div>
+		<div class="form-group">
+			<label for="researchfield" class="col-sm-4 control-label">Research Field 1</label>
+			<div class="col-sm-8">
+				<div class="row">
+					<div class="col-sm-6">
+						<SELECT class="form-control" NAME='researchfield' id="researchfield">
+							<OPTION VALUE='other'>Other (enter in adjacent field)</OPTION><OPTION VALUE='AI'>AI</OPTION><OPTION VALUE='Algorithms'>Algorithms</OPTION><OPTION VALUE='Architecture & Hardware'>Architecture & Hardware</OPTION><OPTION VALUE='BioComputation'>BioComputation</OPTION><OPTION VALUE='Compilers'>Compilers</OPTION><OPTION VALUE='Databases'>Databases</OPTION><OPTION VALUE='Distributed Systems'>Distributed Systems</OPTION><OPTION VALUE='Graphics'>Graphics</OPTION><OPTION VALUE='HCI'>HCI</OPTION><OPTION VALUE='Networking'>Networking</OPTION><OPTION VALUE='Operating Systems'>Operating Systems</OPTION><OPTION VALUE='Programming Languages'>Programming Languages</OPTION><OPTION VALUE='Robotics'>Robotics</OPTION><OPTION VALUE='Scientific Computing'>Scientific Computing</OPTION><OPTION VALUE='Security'>Security</OPTION><OPTION VALUE='Software Engineering'>Software Engineering</OPTION><OPTION VALUE='Theory of Computation'>Theory of Computation</OPTION><OPTION VALUE='Vision'>Vision</OPTION>
+						</SELECT>
+					</div>
+
+					<div class="col-sm-6"><INPUT class="pull-right form-control" TYPE=text SIZE=50 MAXLENGTH=150 NAME=researchfield_typed VALUE='' TABINDEX='2'></div>
+				</div></div>
+		</div>
+		<div class="form-group">
+			<label for="secondfield" class="col-sm-4 control-label">Research Field 2 (optional)</label>
+			<div class="col-sm-8">
+				<div class="row">
+					<div class="col-sm-6">
+						<SELECT class="form-control" NAME='secondfield' id="secondfield">
+							<OPTION VALUE='other'>Other (enter in adjacent field)</OPTION><OPTION VALUE='AI'>AI</OPTION><OPTION VALUE='Algorithms'>Algorithms</OPTION><OPTION VALUE='Architecture & Hardware'>Architecture & Hardware</OPTION><OPTION VALUE='BioComputation'>BioComputation</OPTION><OPTION VALUE='Compilers'>Compilers</OPTION><OPTION VALUE='Databases'>Databases</OPTION><OPTION VALUE='Distributed Systems'>Distributed Systems</OPTION><OPTION VALUE='Graphics'>Graphics</OPTION><OPTION VALUE='HCI'>HCI</OPTION><OPTION VALUE='Networking'>Networking</OPTION><OPTION VALUE='Operating Systems'>Operating Systems</OPTION><OPTION VALUE='Programming Languages'>Programming Languages</OPTION><OPTION VALUE='Robotics'>Robotics</OPTION><OPTION VALUE='Scientific Computing'>Scientific Computing</OPTION><OPTION VALUE='Security'>Security</OPTION><OPTION VALUE='Software Engineering'>Software Engineering</OPTION><OPTION VALUE='Theory of Computation'>Theory of Computation</OPTION><OPTION VALUE='Vision'>Vision</OPTION>
+						</SELECT>
+					</div>
+
+					<div class="col-sm-6"><INPUT class="pull-right form-control" TYPE=text SIZE=50 MAXLENGTH=150 NAME=secondfield_typed VALUE='' TABINDEX='2'></div>
+				</div></div>
+		</div>
+		<div class="form-group">
+			<label for="thirdfield" class="col-sm-4 control-label">Research Field 3 (optional)</label>
+			<div class="col-sm-8">
+				<div class="row">
+					<div class="col-sm-6">
+						<SELECT class="form-control" NAME='thirdfield' id="thirdfield">
+							<OPTION VALUE='other'>Other (enter in adjacent field)</OPTION><OPTION VALUE='AI'>AI</OPTION><OPTION VALUE='Algorithms'>Algorithms</OPTION><OPTION VALUE='Architecture & Hardware'>Architecture & Hardware</OPTION><OPTION VALUE='BioComputation'>BioComputation</OPTION><OPTION VALUE='Compilers'>Compilers</OPTION><OPTION VALUE='Databases'>Databases</OPTION><OPTION VALUE='Distributed Systems'>Distributed Systems</OPTION><OPTION VALUE='Graphics'>Graphics</OPTION><OPTION VALUE='HCI'>HCI</OPTION><OPTION VALUE='Networking'>Networking</OPTION><OPTION VALUE='Operating Systems'>Operating Systems</OPTION><OPTION VALUE='Programming Languages'>Programming Languages</OPTION><OPTION VALUE='Robotics'>Robotics</OPTION><OPTION VALUE='Scientific Computing'>Scientific Computing</OPTION><OPTION VALUE='Security'>Security</OPTION><OPTION VALUE='Software Engineering'>Software Engineering</OPTION><OPTION VALUE='Theory of Computation'>Theory of Computation</OPTION><OPTION VALUE='Vision'>Vision</OPTION>
+						</SELECT>
+					</div>
+
+					<div class="col-sm-6"><INPUT class="pull-right form-control" TYPE=text SIZE=50 MAXLENGTH=150 NAME=thirdfield_typed VALUE='' TABINDEX='2'></div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="url" class="col-sm-4 control-label">Project URL</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="url" id="url" maxlength="100" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="description" class="col-sm-4 control-label">Description</label>
+			<div class="col-sm-8">
+				<textarea class="form-control" name="description" id="description" maxlength="100"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="background" class="col-sm-4 control-label">Recommended Background</label>
+			<div class="col-sm-8">
+				<textarea class="form-control" name="background" id="background" maxlength="100"></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="degree_program" class="col-sm-4 control-label">Eligible Degrees</label>
+			<div class="col-sm-8">
+				<div id="degree_program">
+					<div class="radio">
+						<label>
+							<input type="radio" name="degree_program" value="2">
+							Undergraduate
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="degree_program" value="1">
+							Masters
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" name="degree_program" value="0">
+							Both
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="incentives" class="col-sm-4 control-label">Available Incentives</label>
+			<div class="col-sm-8">
+				<div id="incentives">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="RAship" value="1" >
+							RA-ship (Master's only)
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="hourly" value="2" >
+							Hourly pay
+						</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="credit" value="4" >
+							Credit
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="capacity" class="col-sm-4 control-label">Number of Students</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="capacity" id="capacity" maxlength="100" maxlength="9" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="prof" class="col-sm-4 control-label">Professor</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="prof" id="prof" maxlength="100" maxlength="9" value="<?=$User->name?>" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="prof_email" class="col-sm-4 control-label">Professor Email</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="prof_email" id="prof_email" maxlength="100" maxlength="9" value="<?=$User->email?>" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="prof_webpage" class="col-sm-4 control-label">Professor Webpage</label>
+			<div class="col-sm-8">
+				<input type="text" class="form-control" name="prof_webpage" id="prof_webpage" maxlength="100" maxlength="9" value="<?=$User->webpage?>" />
+			</div>
+		</div>
+		<div class="text-center">
+			<INPUT class="btn btn-success btn-lg" TYPE='Submit' NAME='Action' VALUE='Save'>
+			<INPUT class="btn btn-danger btn-lg" TYPE='Reset' NAME='Action' VALUE='Reset'>
+		</div>
+
+	</form>
+
+</div>

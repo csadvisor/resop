@@ -1,7 +1,7 @@
 			<div id="content">
 				<h2>Current Users</h2>
 				<p>You can edit the user entries here.  Entries are sorted by assigned role - Students, then faculty, then alpha by SUNet ID.</p>
-				<table width=600 align=center>
+				<table class="table table-striped table-bordered">
 					<tr>
 						<td>Name</td>
 						<td>SUNet ID</td>

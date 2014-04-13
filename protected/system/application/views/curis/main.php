@@ -1,11 +1,11 @@
 <html>
-	<head>
-		<title><?php echo $title; ?></title>
-		<!-- insert metadata here -->
-		
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-		<!-- CSS for everything -->
-		<style type="text/css">
+<head>
+	<title>CS Research Opportunities</title>
+	<!-- insert metadata here -->
+
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<!-- CSS for everything -->
+		<!--style type="text/css">
 		#container {
 			margin-left: 100px;
 			margin-right: auto;
@@ -148,18 +148,78 @@
 		.accept {font-weight:bold;color:#339933;}
 		.reject {font-weight:bold;color:#D80000;}
 		.application .caption {width: 35%;}
-		</style>
+	</style-->
+
+</head>
+<body>
+	<nav class="navbar navbar-inverse" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<li>
+					<a href="/resop/protected/index.php/curis">
+						<img src="https://cs.stanford.edu/resop/cslogo.png">
+					</a>
+				</li>
+			</div>
 			
-	</head>
-	<body>
-		<div id="sidebar">
+		</div>
+		<!--<p class="navbar-text navbar-right">Signed in as <a href="#" class="navbar-link">Mark Otto</a></p>-->
+	</nav>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<h3><?= isset($category) ? $category : "" ?></h3>
+				<ul class="nav nav-pills nav-stacked well">
+					<?php
+					if (isset($links)) {
+						$longest = "";
+						$url = $_SERVER['PHP_SELF'];
+
+						foreach($links as $name => $link){
+							if (strpos($url, $link) !== FALSE && strlen($link) > strlen($longest)) {
+								$longest = $link;
+							}
+						} 
+						foreach($links as $name => $link){
+							if ($link == $longest) {
+								echo "<li class=\"active\">";
+							} else {
+								echo "<li>";
+							}
+							echo "<a href =\"".$link."\">".$name ."</a></li>";
+						}
+					}
+					?>
+				</ul>
+			</div>
+			<div class="col-md-9">
+				<div id="main">
+					<?  if (isset($html)) {
+						echo $html;
+					} else if (isset($view)) {
+						$this->load->view($view, $this);
+					}
+					?>
+				</div>
+			</div>	
+		</div>
+		<div class="row text-center">
+			<div id="botbar">
+				<p>
+					<a href = "/resop/protected/index.php/"> 
+						Research Opportunities Home
+					</a><br />
+					Questions? Contact the 
+					<a href="mailto:advisor@cs.stanford.edu">
+						Course Advisor
+					</a>
+				</p>
+			</div>
+		</div>
+		<!--div id="sidebar">
 			<h3 style="margin-bottom:10px">Navigation</h3>
 			<ul>
-				<?php 
-				foreach($links as $name => $link){
-					echo "<li><a href =\"".$link."\">".$name ."</a></li>";
-				}
-				?>
+				
 			</ul>
 		</div>
 		<div id="topbar">
@@ -168,16 +228,10 @@
 				<img src="https://cs.stanford.edu/resop/cslogo.png"></a>
 			</div>
 		</div>  
-		<div id="container">
+		<div id="container"-->
 
-			<div id="main">
+			<!--end 'main' div -->
 
-			</div> <!--end 'main' div -->
-			<div id="botbar">
-				<p><a href = "/resop/protected/index.php/"> 
-				Research Opportunities Home</a><br>
-				Questions? Contact the <a href="mailto:advisor@cs.stanford.edu">Course Advisor</a>
-			</div>
 		</div> <!--end 'container' div -->
 	</body>
-</html>
+	</html>

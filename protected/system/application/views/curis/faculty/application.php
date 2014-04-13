@@ -2,33 +2,33 @@
 			
 			<h2><?=$application->proj_title?></h2>
 			
-			<table class="shaded" align="center">
+			<table class="table table-striped table-bordered" align="center" >
 				<tr>
-		                        <td class="caption">Name:</td>
+					<td class="caption">Name</td>
 					<td class="input"><?=$user->name?></td>
 				</tr>
 				<tr>
-		                        <td class="caption">Major:</td>
+					<td class="caption">Major</td>
 					<td class="input"><?=$user->major?></td>
 				</tr>
 				<tr>
-		                        <td class="caption">Year:</td>
+					<td class="caption">Year</td>
 					<td class="input"><?=$user->year?></td>
 				</tr>
 				<tr>
-		<td class="caption">GPA:</td>
+					<td class="caption">GPA</td>
 					<td class="input"><?=$user->gpa?></td>
 				</tr>
 				<tr>
-		<td class="caption">Interest Area:</td>
+					<td class="caption">Interest Area</td>
 					<td class="input"><?=$user->interestarea?></td>
 				</tr>
 				<tr>
-		<td class="caption">Webpage:</td>
+					<td class="caption">Webpage</td>
 					<td class="input"><a href="<?=$user->webpage?>"><?=$user->webpage?></a></td>
 				</tr>
 				<tr>
-		<td class="caption">Email:</td>
+					<td class="caption">Email</td>
 					<td class="input"><a href="mailto:<?=$user->email?>"><?=$user->email?></a></td>
 				</tr>
 			<!--	<tr>
@@ -52,15 +52,15 @@
 					<td><?=$application->score?></td>
 				</tr>-->
 				<tr>
-					<td class="caption">Application Statement:</td>
+					<td class="caption">Application Statement</td>
 					<td class="input"><?=$application->statement?></td>
 				</tr>
 				<tr>
-					<td class="caption">Transcript:</td>
+					<td class="caption">Transcript</td>
 					<td class="input"><a href="<?=$user->transcript?>" target="_blank"><?=($user->transcript == "") ? "":"Available"?></a></td>
 				</tr>
 				<tr>
-					<td class="caption">Resume:</td>
+					<td class="caption">Resume</td>
 					<td class="input"><a href="<?=$user->resume?>"  target="_blank"><?=($user->resume == "")?"":"Available"?></a></td>
 				</tr>
 			</table>
@@ -99,24 +99,30 @@
           	</form>
           	<script language="Javascript">
           	function verify(msg){
-				return confirm(msg);
-			}
-			</script>
-      <form method="post" action="">
-          	<input type="hidden" name="sunetid" value="<?=$user->sunetid?>"/>
-          	<input type="hidden" name="proj_id" value="<?=$application->proj_id?>"/>
-          	<p align="center">Application status:
-          	<select name="accept_status">
-          		<option value='0' <?=($application->accept_status=="0")? "selected":""?>>Under Review</option>
-							<option value='1' <?=($application->accept_status=="1")? "selected":""?>>Accepted</option>
-							<option value='2' <?=($application->accept_status=="2")? "selected":""?>>Rejected</option>
-          	</select></p>
-          	<div align="center">
-          	<span style="vertical-align:top;">Comments (optional):</span>
-          	<TEXTAREA NAME='decision_rational' MAXLENGTH=2000 cols='50' rows='4' wrap='VIRTUAL' tabindex='3'><?=stripslashes($application->rationale)?></TEXTAREA>
-						<div style="text-align:right;padding:10px 40px;"><input type="submit" name="Action" value="Save"  <?=($rate_enabled !="1"?"disabled":"")?></div> 
-          	</div>
-      </form>
+          		return confirm(msg);
+          	}
+          	</script>
+          	<form method="post" action="" class="form-horizontal" role="form">
+          		<input type="hidden" name="sunetid" value="<?=$user->sunetid?>"/>
+          		<input type="hidden" name="proj_id" value="<?=$application->proj_id?>"/>
+          		<div class="form-group">
+          			<label for="accept_status" class="col-sm-3 control-label">Application Status</label>
+          			<div class="col-sm-9">
+          				<select name="accept_status" id="accept_status" class="form-control">
+          				<option value='0' <?=($application->accept_status=="0")? "selected":""?>>Under Review</option>
+          				<option value='1' <?=($application->accept_status=="1")? "selected":""?>>Accepted</option>
+          				<option value='2' <?=($application->accept_status=="2")? "selected":""?>>Rejected</option>
+          			</select>
+          			</div>
+          		</div>
+          		<div class="form-group">
+          			<label for="decision_rational" class="col-sm-3 control-label">Comments (optional)</label>
+          			<div class="col-sm-9">
+          				<TEXTAREA class="form-control" NAME='decision_rational' id="decision_rational" MAXLENGTH=2000 rows="6"><?=stripslashes($application->rationale)?></TEXTAREA>
+          			</div>
+          		</div>
+          		<input class="btn btn-primary" type="submit" name="Action" value="Save"  <?=($rate_enabled !="1"?"disabled":"")?>
+          		</form>
 
-				
-			</div>
+
+          	</div>
